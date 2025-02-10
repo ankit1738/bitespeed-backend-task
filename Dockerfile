@@ -10,8 +10,6 @@ COPY . .
 
 ENV NODE_PATH=./build
 
+EXPOSE 3000
 
-
-
-
-
+CMD [ "npm", "start" ]
