@@ -1,0 +1,28 @@
+{
+  "name": "bitespeed-backend-task",
+  "version": "1.0.0",
+  "description": "Bitespeed backend task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx tsc && node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ankit1738/bitespeed-backend-task.git"
+  },
+  "author": "Ankit Kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ankit1738/bitespeed-backend-task/issues"
+  },
+  "homepage": "https://github.com/ankit1738/bitespeed-backend-task#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "typescript": "^5.7.3"
+  }
+}
