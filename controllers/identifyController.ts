@@ -36,7 +36,7 @@ export const identifyContact = async (req: any, res: any) => {
       .filter((contact) => contact.linkprecedence === "primary")
       .sort(function (a, b) {
         return (
-          new Date(b.createdat).valueOf() - new Date(a.createdat).valueOf()
+          new Date(a.createdat).valueOf() - new Date(b.createdat).valueOf()
         );
       });
 
@@ -54,11 +54,11 @@ export const identifyContact = async (req: any, res: any) => {
       //multiple Primary contacts found
       //only the oldest contact will remain as primary
       flag = false;
-      await updateContact(primaryContact[0].id);
+      await updateContact(primaryContact[1].id);
     }
 
     // @ts-ignore
-    const primaryContactId = primaryContact[1].id; // chosing the older one as primary id
+    const primaryContactId = primaryContact.id; // chosing the older one as primary id
     const emails = new Set(
       rows.map((contact) => contact.email).filter(Boolean)
     );
