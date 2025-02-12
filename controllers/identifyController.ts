@@ -56,6 +56,8 @@ export const identifyContact = async (req: any, res: any) => {
     }
 
     //Process linked contacts
+
+    let flag = true; // flag is used to identify if a secondary contact was updated or not so that a new entry is not created
     let primaryContact = rows
       .filter((contact) => contact.linkprecedence === "primary")
       .sort(function (a, b) {
@@ -79,6 +81,7 @@ export const identifyContact = async (req: any, res: any) => {
       //multiple Primary contacts found
       //only the oldest contact will remain as primary
       const updateQuery = `Update Contact set linkprecedence = 'secondary' where id = ${primaryContact[0].id}`;
+      flag = false;
       await db.query(updateQuery);
       console.log("Update query", updateQuery);
     }
@@ -109,7 +112,7 @@ export const identifyContact = async (req: any, res: any) => {
       );
     }
     console.log("Is new contact:", isNewContact);
-    if (isNewContact) {
+    if (isNewContact && flag) {
       const insertResult = await db.query(
         `INSERT INTO Contact (email, phonenumber, linkedid, linkprecedence, createdat, updatedat) 
          VALUES ($1, $2, $3, 'secondary', NOW(), NOW()) RETURNING id`,
