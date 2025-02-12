@@ -58,7 +58,7 @@ export const identifyContact = async (req: any, res: any) => {
     }
 
     // @ts-ignore
-    const primaryContactId = primaryContact[0].id; // chosing the older one as primary id
+    const primaryContactId = primaryContact.id; // chosing the older one as primary id
     const emails = new Set(
       rows.map((contact) => contact.email).filter(Boolean)
     );
