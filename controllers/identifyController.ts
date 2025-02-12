@@ -27,7 +27,7 @@ export const identifyContact = async (req: any, res: any) => {
       );
     }else{
       result = await db.query(
-        `SELECT * FROM Contact WHERE phonenumber = $1 OR email in (SELECT email from Contact where phonenumber = $1) AND deletedat IS NULL;`,
+        `SELECT * FROM Contact WHERE phonenumber = $1 OR email  (SELECT email from Contact where phonenumber = $1) AND deletedat IS NULL;`,
         [phoneNumber]
       );
     }
@@ -64,7 +64,24 @@ export const identifyContact = async (req: any, res: any) => {
         );
       });
       console.log("Primary COntac rows ", primaryContact);
-    
+    if (primaryContact.length === 0) {
+      console.log("No primary contact found");
+      //no primary contact found, the found contact with email or phonenumber is secondary and now we need to find 
+      //the linked primary contact.
+      const result = await db.query(
+        `SELECT * FROM Contact WHERE id = $1 AND deletedAt IS NULL`,
+        [rows[0].linkedid]
+      );
+      primaryContact = result.rows[0];
+    } else if (primaryContact.length === 1) {
+      primaryContact = primaryContact[0];
+    } else {
+      //multiple Primary contacts found
+      //only the oldest contact will remain as primary
+      const updateQuery = `Update Contact set linkprecedence = 'secondary' where id = ${primaryContact[0].id}`;
+      await db.query(updateQuery);
+      console.log("Update query", updateQuery);
+    }
 
     // @ts-ignore
     const primaryContactId = primaryContact.id;
