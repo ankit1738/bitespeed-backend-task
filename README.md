@@ -1,7 +1,5 @@
 # bitespeed-backend-task
 
-Author: ankit1738@gmail.com
-
 Exposed Enpoint:(POST req) https://bitespeed-backend-task-pma3.onrender.com/identify
 
 Sample Curl: 
