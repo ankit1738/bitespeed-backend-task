@@ -27,7 +27,7 @@ export const identifyContact = async (req: any, res: any) => {
       );
     }else{
       result = await db.query(
-        `SELECT * FROM Contact WHERE phonenumber = $1 OR email  (SELECT email from Contact where phonenumber = $1) AND deletedat IS NULL;`,
+        `SELECT * FROM Contact WHERE phonenumber = $1 OR email in (SELECT email from Contact where phonenumber = $1) AND deletedat IS NULL;`,
         [phoneNumber]
       );
     }
