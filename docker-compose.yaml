@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  bitespeed-backend-task:
+    image: bitespeed-backend-task
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    expose:
+      - '3000'
+    ports:
+      - '3000:3000'
+    command: npm run start
