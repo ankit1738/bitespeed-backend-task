@@ -40,10 +40,7 @@ export const identifyContact = async (req: any, res: any) => {
         );
       });
 
-      console.log("Primary contact rows ", primaryContact);
-
     if (primaryContact.length === 0) {
-      console.log("No primary contact found");
       //no primary contact found, the found contact with email or phonenumber is secondary and now we need to find 
       //the linked primary contact.
       const result = await getContact({linkedid: rows[0].linkedid});
@@ -90,7 +87,6 @@ export const identifyContact = async (req: any, res: any) => {
       },
     });
   } catch (error) {
-    console.error("Error identifying contact:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
